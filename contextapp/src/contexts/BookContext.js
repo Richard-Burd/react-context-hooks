@@ -8,7 +8,7 @@ const BookContextProvider = (props) => {
     {title: 'the way of kings', id: 2},
     {title: 'the final empire', id: 3},
     {title: 'the hero of ages', id: 4}
-  ])
+  ]);
   return (
     <BookContext.Provider value={{books}}>
       {props.children}
