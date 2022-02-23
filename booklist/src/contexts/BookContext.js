@@ -1,4 +1,4 @@
-import React, { createContext, /*useState*/ useReducer } from 'react';
+import React, { createContext, /*useState*/ useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { bookReducer } from '../reducers/bookReducer';
 
@@ -25,7 +25,17 @@ const BookContextProvider = (props) => {
   )
   */
 
-  const [books, dispatch] = useReducer(bookReducer, []);
+  // empty array b/c we start with no books at all.
+  const [books, dispatch] = useReducer(bookReducer, [], () => {
+    const localData = localStorage.getItem('books');
+    return localData ? JSON.parse(localData) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('books', JSON.stringify(books))
+  }, [books]); // whenever the books array changes, run this code
+
+
   return (
     <BookContext.Provider value={{ books, dispatch}}>
       {props.children}
